@@ -293,7 +293,7 @@ function. The `boot` option is ignored for the ACE(t)-p model.
 ![](Figs/unnamed-chunk-13-2.png)
 
 Assigning too many knots in the ACE(t)-p model is much less harmful than
-that in the ACE(t) model. Comparing the following two plots from the
+that in the ACE(t) model. Comparing the following two plots (Left: the ACE(t) model. Right: the ACE(t)-p model.) from the
 application of the two models with 10 knots for each component to the
 example data set, it suggests that the ACE(t) model has an overfitting
 problem but the ACE(t)-p model works properly.
