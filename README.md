@@ -5,6 +5,8 @@
         dataset](#application-to-an-example-dataset)
     -   [Reference](#reference)
 
+    knitr::opts_chunk$set(fig.path='Figs/')
+
 # ACEt v1.8.2
 
 ## Installation
@@ -184,7 +186,7 @@ curves by calling the `plot_acet` function.
 
     plot_acet(re, ylab='Var', xlab='Age (1-50)')
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+![](Figs/unnamed-chunk-8-1.png)
 
 By default, the 95% pointwise CIs are estimated using the delta method.
 Alternatively, we can choose the bootstrap method by setting `boot=TRUE`
@@ -196,7 +198,7 @@ which is 100.
                    num_b = 60)
     plot_acet(re_b, boot = TRUE)
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+![](Figs/unnamed-chunk-9-1.png)
 
 Next, we plot the age-specific heritability by setting the argument
 `heri=TRUE` in the `plot_acet` function. And similarly we can choose
@@ -205,12 +207,12 @@ either the delta method or the bootstrap method to generate the CIs.
     ## plot dynamic heritability with the CIs using the delta method 
     plot_acet(re_b, heri=TRUE, boot = FALSE)
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](Figs/unnamed-chunk-10-1.png)
 
     ## plot dynamic heritability with the CIs using the bootstrap method 
     plot_acet(re_b, heri=TRUE, boot = TRUE)
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-10-2.png)
+![](Figs/unnamed-chunk-10-2.png)
 
 The ACE(t)-p model is implemented in the `AtCtEtp` function, in which
 users can choose exponential of penalized splines, a linear function or
@@ -284,11 +286,11 @@ function. The `boot` option is ignored for the ACE(t)-p model.
 
     plot_acet(re_mcmc)
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+![](Figs/unnamed-chunk-13-1.png)
 
     plot_acet(re_mcmc, heri=TRUE)
 
-![](C:/Users/helia/AppData/Local/Temp/RtmpycoVnB/preview-bc4104d6dd7.dir/acet-vignette_files/figure-markdown_strict/unnamed-chunk-13-2.png)
+![](Figs/unnamed-chunk-13-2.png)
 
 Assigning too many knots in the ACE(t)-p model is much less harmful than
 that in the ACE(t) model. Comparing the following two plots (Figure )
@@ -310,7 +312,7 @@ specified as log-linear when fitting the model (as shown above).
     #> [1] "Constancy (null) vs. Log-linear"
     test$p
     #>           [,1]
-    #> [1,] 0.1561263
+    #> [1,] 0.3174813
 
 The result suggests that the E component is time-invariant as the
 p-value is larger than 0.05. Next, we test whether a log-linear model
