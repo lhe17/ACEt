@@ -128,12 +128,10 @@ plot_acet(re_mcmc)
 plot_acet(re_mcmc, heri=TRUE)
 ```
 
-Assigning too many knots in the ACE(t)-p model is much less harmful than that in the ACE(t) model. Comparing the following two plots (Figure \ref{fig:knot_10}) from the application of the two models with 10 knots for each component to the example data set, it suggests that the ACE(t) model has an overfitting problem but the ACE(t)-p model works properly.
-\begin{figure}[h!]
-  \includegraphics[width=\linewidth]{knot_10.jpg}
-  \caption{Plots of variance curves of the example data set fitted by the ACE(t) and ACE(t)-p model with 10 interior knots for each component. Left: the ACE(t) model. Right: the ACE(t)-p model.}
-  \label{fig:knot_10}
-\end{figure}
+Assigning too many knots in the ACE(t)-p model is much less harmful than that in the ACE(t) model. Comparing the following two plots from the application of the two models with 10 knots for each component to the example data set, it suggests that the ACE(t) model has an overfitting problem but the ACE(t)-p model works properly.
+```
+![Plots of variance curves of the example data set fitted by the ACE(t) and ACE(t)-p model with 10 interior knots for each component. Left: the ACE(t) model. Right: the ACE(t)-p model.](vignettes/knot_10.jpg)
+```
 
 Finally, we give an example to test a linear or constant variance curve. The ```test_acetp``` function is dedicated to the model comparison for the ACE(t)-p model and returns a p-value from LRT using a resampling method for testing log-linearity or from a $\chi^2$ distribution for testing constancy. First, the following code tests whether the E component is invariant with age. Before testing, we need to fit the data using the ```AtCtEtp``` function and obtain an ```AtCtEtp_model``` object ```re```. Note that when testing a constant component, the component must be specified as log-linear when fitting the model (as shown above). 
 ```{r}

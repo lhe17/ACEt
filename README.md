@@ -247,7 +247,7 @@ being stuck on a local maximum in the EM algorithm.
     #> beta_e     2   -none- numeric  
     #> con        1   -none- numeric  
     #> lik        1   -none- numeric  
-    #> iter       5   -none- numeric  
+    #> iter       4   -none- numeric  
     #> var_b_a    1   -none- numeric  
     #> var_b_c    1   -none- numeric  
     #> var_b_e    1   -none- numeric  
@@ -293,10 +293,13 @@ function. The `boot` option is ignored for the ACE(t)-p model.
 ![](Figs/unnamed-chunk-13-2.png)
 
 Assigning too many knots in the ACE(t)-p model is much less harmful than
-that in the ACE(t) model. Comparing the following two plots (Figure )
-from the application of the two models with 10 knots for each component
-to the example data set, it suggests that the ACE(t) model has an
-overfitting problem but the ACE(t)-p model works properly.
+that in the ACE(t) model. Comparing the following two plots from the
+application of the two models with 10 knots for each component to the
+example data set, it suggests that the ACE(t) model has an overfitting
+problem but the ACE(t)-p model works properly.
+
+    ![Plots of variance curves of the example data set fitted by the ACE(t) and ACE(t)-p model with 10 interior knots for each component. Left: the ACE(t) model. Right: the ACE(t)-p model.](vignettes/knot_10.jpg)
+
 Finally, we give an example to test a linear or constant variance curve.
 The `test_acetp` function is dedicated to the model comparison for the
 ACE(t)-p model and returns a p-value from LRT using a resampling method
@@ -312,7 +315,7 @@ specified as log-linear when fitting the model (as shown above).
     #> [1] "Constancy (null) vs. Log-linear"
     test$p
     #>           [,1]
-    #> [1,] 0.3174813
+    #> [1,] 0.2822383
 
 The result suggests that the E component is time-invariant as the
 p-value is larger than 0.05. Next, we test whether a log-linear model
