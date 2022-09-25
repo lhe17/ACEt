@@ -298,7 +298,7 @@ application of the two models with 10 knots for each component to the
 example data set, it suggests that the ACE(t) model has an overfitting
 problem but the ACE(t)-p model works properly.
 
-    ![Plots of variance curves of the example data set fitted by the ACE(t) and ACE(t)-p model with 10 interior knots for each component. Left: the ACE(t) model. Right: the ACE(t)-p model.](vignettes/knot_10.jpg)
+![](vignettes/knot_10.jpg)
 
 Finally, we give an example to test a linear or constant variance curve.
 The `test_acetp` function is dedicated to the model comparison for the
