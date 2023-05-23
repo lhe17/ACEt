@@ -1,13 +1,15 @@
--   [ACEt v1.8.2](#acet-v1.8.2)
-    -   [Installation](#installation)
-        -   [Most recent version](#most-recent-version)
-    -   [Application to an example
-        dataset](#application-to-an-example-dataset)
-    -   [Reference](#reference)
+-   <a href="#acet-v1.9.0" id="toc-acet-v1.9.0">ACEt v1.9.0</a>
+    -   <a href="#installation" id="toc-installation">Installation</a>
+        -   <a href="#most-recent-version" id="toc-most-recent-version">Most recent
+            version</a>
+    -   <a href="#application-to-an-example-dataset"
+        id="toc-application-to-an-example-dataset">Application to an example
+        dataset</a>
+    -   <a href="#reference" id="toc-reference">Reference</a>
 
     knitr::opts_chunk$set(fig.path='Figs/')
 
-# ACEt v1.8.2
+# ACEt v1.9.0
 
 ## Installation
 
@@ -19,7 +21,7 @@ The installation requires *Rcpp-0.11.1* and has been tested on
 *R-4.1.3*. The installation of the *ACEt* package also requires
 installing the *BH* and *RcppArmadillo* packages.
 
-Please contact <lianghe@health.sdu.dk> for more information.
+Please contact <hyx520101@gmail.com> for more information.
 
 ### Most recent version
 
@@ -70,7 +72,8 @@ the phenotype should be centered, for example, by using residuals from a
 linear regression model `lm()` in which covariates for the mean function
 can be included. Fitting an ACE(t) model can be done by calling the
 `AtCtEt` function, in which users can specify a function (null, constant
-or splines) for each component independently through the `mod` argument.
+or splines) for each of the A, C, and E components independently through
+the `mod` argument.
 
     # fitting the ACE(t) model
     re <- AtCtEt(data_ace$mz, data_ace$dz, mod = c('d','d','c'), knot_a = 6, knot_c = 4)
@@ -109,14 +112,15 @@ choose `'c'` or `'n'` for that component. The number of randomly
 generated initial values for the estimation algorithm can be specified
 using the `robust` argument. Multiple initial values can be attempted to
 minimize the risk of missing the global maximum. The `AtCtEt` function
-returns both analytical and approximated Hessian matrices (shown below),
-which are close to each other in general and can be used to compute
-pointwise CIs. Note that the analytical Hessian is always positive
-definite, but the approximated one is not necessarily positive definite.
-The returned value `lik` is the negative log-likelihood that can be used
-for LRT for the comparison of twin models.
+returns both an expected and an approximate observed Fisher information
+matrices (shown below), which are close to each other in general and can
+be used to compute pointwise CIs. Note that the expected information
+matrix is always positive (semi)definite, but the approximated one is
+not necessarily positive definite. The returned value `lik` is the
+negative log-likelihood that can be used for LRT for the comparison of
+twin models.
 
-    # part of the analytical Hessian matrix
+    # part of the expected information matrix
     re$hessian[1:8,1:8]
     #>           [,1]      [,2]        [,3]         [,4]       [,5]       [,6]
     #> [1,] 3.3122436  8.572181   0.9774334   0.00000000   0.000000   0.000000
@@ -136,7 +140,7 @@ for LRT for the comparison of twin models.
     #> [6,] 22.878770  0.00000000
     #> [7,] 11.077766  0.00000000
     #> [8,]  0.000000 11.02095804
-    # part the Hessian matrix approximated by the L-BFGS algorithm
+    # part the observed information matrix approximated by the L-BFGS algorithm
     re$hessian_ap[1:8,1:8]
     #>           [,1]      [,2]        [,3]         [,4]       [,5]       [,6]
     #> [1,] 3.3066880  8.583804   0.9771341   0.00000000   0.000000   0.000000
@@ -214,15 +218,24 @@ either the delta method or the bootstrap method to generate the CIs.
 
 ![](Figs/unnamed-chunk-10-2.png)
 
-The ACE(t)-p model is implemented in the `AtCtEtp` function, in which
-users can choose exponential of penalized splines, a linear function or
-a constant to model a certain component by setting the `mod` argument.
-Compared to the ACE(t) model, it is not an essential problem to provide
-an excessive number of knots (the default value of interior knots is 8)
-when using the ACE(t)-p model as it is more important to ensure adequate
-knots for curves with more fluctuation than to avoid overfitting. Below,
-we fit the example dataset using the `AtCtEtp` function in which the A
-and C components are modelled by B-splines of 8 interior knots and the E
+An ADE(t) model can be fitted and plotted similarly using the `AtDtEt`
+function as shown below.
+
+    ## fitting an ADE(t) model with the CIs esitmated by the bootstrap method 
+    re_b <- AtDtEt(data_ace$mz, data_ace$dz, mod = c('d','d','c'), boot = TRUE, num_b = 60)
+    plot_acet(re_b, boot = TRUE)
+
+An ACE(t)-p model is a more stable model, which reduces the sensitivity
+to the number of knots by using P-splines. The ACE(t)-p model is
+implemented in the `AtCtEtp` function, in which users can choose
+exponential of penalized splines, a linear function or a constant to
+model a certain component by setting the `mod` argument. Compared to the
+ACE(t) model, it is not an essential problem to provide an excessive
+number of knots (the default value of interior knots is 8) when using
+the ACE(t)-p model as it is more important to ensure adequate knots for
+curves with more fluctuation than to avoid overfitting. Below, we fit
+the example dataset using the `AtCtEtp` function in which the A and C
+components are modelled by B-splines of 8 interior knots and the E
 component by a log-linear function. Similar to the `AtCtEt` function, we
 can use the `robust` argument to specify the number of randomly
 generated initial values, which can reduce the program’s possibility of
@@ -247,7 +260,7 @@ being stuck on a local maximum in the EM algorithm.
     #> beta_e     2   -none- numeric  
     #> con        1   -none- numeric  
     #> lik        1   -none- numeric  
-    #> iter       4   -none- numeric  
+    #> iter       5   -none- numeric  
     #> var_b_a    1   -none- numeric  
     #> var_b_c    1   -none- numeric  
     #> var_b_e    1   -none- numeric  
@@ -286,19 +299,20 @@ function. The `boot` option is ignored for the ACE(t)-p model.
 
     plot_acet(re_mcmc)
 
-![](Figs/unnamed-chunk-13-1.png)
+![](Figs/unnamed-chunk-14-1.png)
 
     plot_acet(re_mcmc, heri=TRUE)
 
-![](Figs/unnamed-chunk-13-2.png)
+![](Figs/unnamed-chunk-14-2.png)
 
 Assigning too many knots in the ACE(t)-p model is much less harmful than
-that in the ACE(t) model. Comparing the following two plots (Left: the ACE(t) model. Right: the ACE(t)-p model.) from the
-application of the two models with 10 knots for each component to the
-example data set, it suggests that the ACE(t) model has an overfitting
-problem but the ACE(t)-p model works properly.
+that in the ACE(t) model. Comparing the following two plots (Left: the
+ACE(t) model. Right: the ACE(t)-p model.) from the application of the
+two models with 10 knots for each component to the example data set, it
+suggests that the ACE(t) model has an overfitting problem but the
+ACE(t)-p model works properly.
 
-![](vignettes/knot_10.jpg)
+    ![](vignettes/knot_10.jpg)
 
 Finally, we give an example to test a linear or constant variance curve.
 The `test_acetp` function is dedicated to the model comparison for the
@@ -315,7 +329,7 @@ specified as log-linear when fitting the model (as shown above).
     #> [1] "Constancy (null) vs. Log-linear"
     test$p
     #>           [,1]
-    #> [1,] 0.2822383
+    #> [1,] 0.2303072
 
 The result suggests that the E component is time-invariant as the
 p-value is larger than 0.05. Next, we test whether a log-linear model
