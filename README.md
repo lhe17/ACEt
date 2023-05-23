@@ -306,13 +306,17 @@ function. The `boot` option is ignored for the ACE(t)-p model.
 ![](Figs/unnamed-chunk-14-2.png)
 
 Assigning too many knots in the ACE(t)-p model is much less harmful than
-that in the ACE(t) model. Comparing the following two plots (Left: the
-ACE(t) model. Right: the ACE(t)-p model.) from the application of the
-two models with 10 knots for each component to the example data set, it
-suggests that the ACE(t) model has an overfitting problem but the
-ACE(t)-p model works properly.
+that in the ACE(t) model. Comparing the following two plots from the
+application of the two models with 10 knots for each component to the
+example data set, it suggests that the ACE(t) model has an overfitting
+problem but the ACE(t)-p model works properly.
 
-    ![](vignettes/knot_10.jpg)
+<img src="knot_10.jpg" alt="Plots of variance curves of the example data set fitted by the ACE(t) and ACE(t)-p model with 10 interior knots for each component. Left: the ACE(t) model. Right: the ACE(t)-p model." width="3600" />
+<p class="caption">
+Plots of variance curves of the example data set fitted by the ACE(t)
+and ACE(t)-p model with 10 interior knots for each component. Left: the
+ACE(t) model. Right: the ACE(t)-p model.
+</p>
 
 Finally, we give an example to test a linear or constant variance curve.
 The `test_acetp` function is dedicated to the model comparison for the
@@ -329,7 +333,7 @@ specified as log-linear when fitting the model (as shown above).
     #> [1] "Constancy (null) vs. Log-linear"
     test$p
     #>           [,1]
-    #> [1,] 0.2303072
+    #> [1,] 0.1396204
 
 The result suggests that the E component is time-invariant as the
 p-value is larger than 0.05. Next, we test whether a log-linear model
